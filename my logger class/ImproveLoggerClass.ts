@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs/promises';
 import * as path from 'path';
 
 type Level = "info" | "warn" | "error";
@@ -6,10 +6,15 @@ type Level = "info" | "warn" | "error";
 const logFilePath = path.join(__dirname, 'custom-log.txt');
 
 class SimpleLogger {
-    private writeToFile(message: string): void {
-        const timestamp = new Date().toISOString();
-        const logEntry = `${timestamp} - ${message}\n`;
-        fs.appendFileSync(logFilePath, logEntry, 'utf8');
+    private async writeToFile(message: string): void {
+        const timestamp = new Date().toISOString()
+        const logEntry = `${timestamp} - ${message}\n`
+
+        try {
+            await fs.appendFile(logFilePath, logEntry, 'utf8');
+        } catch (error) {
+            console.error('Failed to write to log file:', error);
+        }
     }
 
     // using the DRY principle
