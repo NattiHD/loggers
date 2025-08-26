@@ -13,22 +13,23 @@ class SimpleLogger {
     }
 
     // using the DRY principle
-    private log(level: Level, message: string): void {
-        const fullMessage = `${level.toUpperCase()}: ${message}`;
-        console.log(fullMessage); // נשתמש ב-console.log לכולם בינתיים
-        this.writeToFile(fullMessage);
+    private log(level: Level, message: string, meta:Record<string, unknown>): void {
+        const metaData = meta? JSON.stringify(meta) :""
+        const fullMessage = `${level.toUpperCase()}: ${message} ${metaData}`;
+        console.log(fullMessage)
+        this.writeToFile(fullMessage)
     }
 
-    info(message: string): void {
-        this.log('info', message);
+    info(message: string, meta:Record<string, unknown>): void {
+        this.log('info', message, meta);
     }
 
-    warn(message: string): void {
-        this.log('warn', message);
+    warn(message: string, meta:Record<string, unknown>): void {
+        this.log('warn', message, meta);
     }
 
-    error(message: string): void {
-        this.log('error', message);
+    error(message: string, meta:Record<string, unknown>): void {
+        this.log('error', message, meta);
     }
 }
 export const logger = new SimpleLogger();
