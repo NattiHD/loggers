@@ -1,6 +1,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
+
 type Level = "info" | "warn" | "error";
 
 const logFilePath = path.join(__dirname, 'custom-log.txt');
